@@ -45,9 +45,14 @@ async function main() {
 
             if (outfitjson.data) {
                 let lastNewOutfitChanged = false
-                for (let outfit of outfitjson.data.reverse()) {
-                    if (outfit.name !== "Roblox Curated Outfit" && outfit.id > lastNewOutfit) {
+                let i = 0;
+                let reversed = outfitjson.data.reverse()
+                let index = reversed.indexOf(reversed.find((outfit)=>outfit.id==lastNewOutfit))
+                for (let outfit of reversed) {
+                    let thisIndex = reversed.indexOf(outfit)
+                    if (outfit.name !== "Roblox Curated Outfit" && thisIndex > index) {
                         lastNewOutfit = outfit.id
+                        index = thisIndex
                         lastNewOutfitChanged = true
                         for (let webhook of webhooks) {
                             webhook.send(`New Outfit!\nName: ${outfit.name}\nCostume Id: ${outfit.id}`)
