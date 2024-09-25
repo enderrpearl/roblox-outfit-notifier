@@ -39,7 +39,7 @@ let lastNewOutfit = parseInt(fs.readFileSync('lastNewOutfit.txt','utf8'))
 async function main() {
     while (true) {
         try {
-            const outfitres = await fetch('https://avatar.roblox.com/v1/users/1/outfits?page=1&itemsPerPage=1000&isEditable=false',{headers:{cookie:cookie}})
+            const outfitres = await fetch('https://avatar.roblox.com/v2/avatar/users/1/outfits?page=1&itemsPerPage=500',{headers:{cookie:cookie}})
            
             const outfitjson = await outfitres.json()
 
@@ -55,7 +55,7 @@ async function main() {
                         index = thisIndex
                         lastNewOutfitChanged = true
                         for (let webhook of webhooks) {
-                            webhook.send(`New Outfit!\nName: ${outfit.name}\nCostume Id: ${outfit.id}`)
+                            webhook.send(`New Outfit!\nName: ${outfit.name}\nCostume Id: ${outfit.id}\nOutfit Type: ${outfit.outfitType}`)
                         }
                     }
                 }
